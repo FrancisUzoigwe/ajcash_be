@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajcash Email Verification</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .header {
+        background-color: #40196D;
+        color: #ffffff;
+        padding: 20px;
+        text-align: center;
+      }
+      .content {
+        padding: 20px;
+      }
+      .verification-code {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin: 20px 0;
+        font-size: 18px;
+        text-align: center;
+        background-color: #f9f9f9;
+        border: 2px solid #dddddd;
+        border-radius: 4px;
+      }
+      .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        text-decoration: none;
+        margin: 20px 0;
+        font-size: 16px;
+        color: #ffffff;
+        background-color: #4caf50;
+        border: none;
+        border-radius: 4px;
+        text-decoration: none;
+        text-align: center;
+      }
+      .footer {
+        padding: 20px;
+        text-align: center;
+        font-size: 14px;
+        color: #888888;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Ajcash Email Verification</h1>
+      </div>
+      <div class="content">
+        <p>Hello <%= email %>,</p>
+        <p>
+          Thank you for registering with Ajcash! To complete your registration,
+          and enjoy the seamless app curated just for you, use the verification
+          code below:
+        </p>
+        <div class="verification-code"><%= code %></div>
+        <a href="<%= link %>" class="btn">Continue Verification</a>
+        <p>If you did not request this email, please ignore it.</p>
+      </div>
+      <div class="footer">
+        <p>&copy; 2024 Ajcash. All rights reserved.</p>
+        <p>N0.80 Bale Road, Ajeromi-Ifelodun, Lagos State, Nigeria.</p>
+      </div>
+    </div>
+  </body>
+</html>
