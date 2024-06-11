@@ -7,7 +7,7 @@ import { IncomingMessage, ServerResponse, Server } from "node:http";
 const app: Application = express();
 const port: number | string = process.env.PORT || 2244;
 
-app.use(cors({ origin: "*", methods: ["GET", "POST", "DELETE", "PATCH"] }));
+app.use(cors({ origin: "https://ajcash-ng.web.app", methods: ["GET", "POST", "DELETE", "PATCH"] }));
 app.use(express.json());
 
 mainApp(app);

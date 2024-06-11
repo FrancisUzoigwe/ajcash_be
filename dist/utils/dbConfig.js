@@ -8,17 +8,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dbConfig = void 0;
 const mongoose_1 = require("mongoose");
-const url = "mongodb://127.0.0.1:27017/cashDB";
-// const url: string =
-//   "mongodb+srv://brighterdayscodelab:brighterdayscodelab@cluster0.dmr8kfs.mongodb.net/AJCash?retryWrites=true&w=majority";
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+const url = "mongodb+srv://kossyuzoigwe:kossyuzoigwe@francisuzoigwe.3irljsp.mongodb.net/Ajcash";
 const dbConfig = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield (0, mongoose_1.connect)(url)
-        .then(() => {
-        console.log("db Connected 🚀🚀");
-    })
-        .catch((err) => console.error(err));
+    try {
+        yield (0, mongoose_1.connect)(url).then(() => {
+            console.log("DB connection established");
+        });
+    }
+    catch (error) {
+        console.log(error === null || error === void 0 ? void 0 : error.message);
+    }
 });
 exports.dbConfig = dbConfig;
