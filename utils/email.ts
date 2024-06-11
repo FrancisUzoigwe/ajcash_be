@@ -20,8 +20,8 @@ const oAuth = new google.auth.OAuth2(
 
 oAuth.setCredentials({ refresh_token: GOOGLE_REFRESH });
 
-const url: string = "http://localhost:5173";
-// const url: string = "https://ajcash-ng.web.app";
+// const url: string = "http://localhost:5173";
+const url: string = "https://ajcash-ng.web.app";
 
 export const verifiedEmail = async (user: any) => {
   try {
