@@ -9,7 +9,7 @@ const mainApp_1 = require("./mainApp");
 const dbConfig_1 = require("./utils/dbConfig");
 const app = (0, express_1.default)();
 const port = process.env.PORT || 2244;
-app.use((0, cors_1.default)({ origin: "https://ajcash-ng.web.app", methods: ["GET", "POST", "DELETE", "PATCH"] }));
+app.use((0, cors_1.default)({ origin: "*", methods: ["GET", "POST", "DELETE", "PATCH"] }));
 app.use(express_1.default.json());
 (0, mainApp_1.mainApp)(app);
 const server = app.listen(port, () => {
