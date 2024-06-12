@@ -17,7 +17,6 @@ const nodemailer_1 = __importDefault(require("nodemailer"));
 const googleapis_1 = require("googleapis");
 const ejs_1 = __importDefault(require("ejs"));
 const path_1 = __importDefault(require("path"));
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const userModel_1 = __importDefault(require("../model/userModel"));
 dotenv_1.default.config();
@@ -43,12 +42,6 @@ const verifiedEmail = (user) => __awaiter(void 0, void 0, void 0, function* () {
                 accessToken,
             },
         });
-        const token = jsonwebtoken_1.default.sign({
-            id: user._id,
-            email: user.email,
-        }, "secretCode", {
-            expiresIn: "5m",
-        });
         const timer = setTimeout(() => __awaiter(void 0, void 0, void 0, function* () {
             const getUser = yield userModel_1.default.findById(user._id);
             if (!getUser.verify) {
@@ -60,7 +53,6 @@ const verifiedEmail = (user) => __awaiter(void 0, void 0, void 0, function* () {
         const myPath = path_1.default.join(__dirname, "../views/index.ejs");
         const html = yield ejs_1.default.renderFile(myPath, {
             link: devURL,
-            code: user === null || user === void 0 ? void 0 : user.code,
             email: user === null || user === void 0 ? void 0 : user.email,
         });
         const mailerOption = {

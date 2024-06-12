@@ -2,7 +2,6 @@ import nodemail from "nodemailer";
 import { google } from "googleapis";
 import ejs from "ejs";
 import path from "path";
-import jwt from "jsonwebtoken";
 import env from "dotenv";
 import userModel from "../model/userModel";
 env.config();
@@ -39,16 +38,6 @@ export const verifiedEmail = async (user: any) => {
       },
     });
 
-    const token = jwt.sign(
-      {
-        id: user._id,
-        email: user.email,
-      },
-      "secretCode",
-      {
-        expiresIn: "5m",
-      }
-    );
 
     const timer = setTimeout(async () => {
       const getUser: any = await userModel.findById(user._id);
@@ -64,7 +53,6 @@ export const verifiedEmail = async (user: any) => {
     const myPath = path.join(__dirname, "../views/index.ejs");
     const html = await ejs.renderFile(myPath, {
       link: devURL,
-      code: user?.code,
       email: user?.email,
     });
 
