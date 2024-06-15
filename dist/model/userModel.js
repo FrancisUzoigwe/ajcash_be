@@ -26,6 +26,7 @@ const userModel = new mongoose_1.Schema({
     code: {
         type: String,
     },
+    pin: { type: String, maxlength: 6 },
     verifyCode: {
         type: String,
     },

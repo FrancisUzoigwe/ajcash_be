@@ -36,6 +36,8 @@ const userModel = new Schema<iUserData>(
       type: String,
     },
 
+    pin: { type: String, maxlength: 6 },
+
     verifyCode: {
       type: String,
     },

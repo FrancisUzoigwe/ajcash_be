@@ -105,6 +105,44 @@ export const signInUser = async (
   }
 };
 
+export const createTransferPin = async (req: Request, res: Response) => {
+  try {
+    const { userID } = req.params;
+    const { pin } = req.body;
+
+    console.log(`Received userID: ${userID}`);
+    console.log(`Received pin: ${pin}`);
+
+    const user = await userModel.findById(userID);
+    if (!user) {
+      console.log("User not found");
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+    const pinned = await userModel.findByIdAndUpdate(
+      userID,
+      { pin },
+      { new: true }
+    );
+
+    console.log(`Pinned user: ${pinned}`);
+
+    return res.status(200).json({
+      message: "Transaction pin created successfully",
+      data: pinned,
+    });
+  } catch (error: any) {
+    console.log(`Error: ${error.message}`);
+    return res.status(400).json({
+      message: "Error occurred",
+      data: error.message,
+    });
+  }
+};
+
+
+
 export const getUser = async (
   req: Request,
   res: Response

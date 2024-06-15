@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findAccountNumber = exports.getAllUserAccounts = exports.deleteUserAccount = exports.updateUserDetails = exports.verifyUser = exports.getUser = exports.signInUser = exports.createUser = void 0;
+exports.findAccountNumber = exports.getAllUserAccounts = exports.deleteUserAccount = exports.updateUserDetails = exports.verifyUser = exports.getUser = exports.createTransferPin = exports.signInUser = exports.createUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const crypto_1 = __importDefault(require("crypto"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -105,6 +105,35 @@ const signInUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.signInUser = signInUser;
+const createTransferPin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userID } = req.params;
+        const { pin } = req.body;
+        console.log(`Received userID: ${userID}`);
+        console.log(`Received pin: ${pin}`);
+        const user = yield userModel_1.default.findById(userID);
+        if (!user) {
+            console.log("User not found");
+            return res.status(404).json({
+                message: "User not found",
+            });
+        }
+        const pinned = yield userModel_1.default.findByIdAndUpdate(userID, { pin }, { new: true });
+        console.log(`Pinned user: ${pinned}`);
+        return res.status(200).json({
+            message: "Transaction pin created successfully",
+            data: pinned,
+        });
+    }
+    catch (error) {
+        console.log(`Error: ${error.message}`);
+        return res.status(400).json({
+            message: "Error occurred",
+            data: error.message,
+        });
+    }
+});
+exports.createTransferPin = createTransferPin;
 const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userID } = req.params;

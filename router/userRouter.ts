@@ -8,6 +8,7 @@ import {
   updateUserDetails,
   getAllUserAccounts,
   findAccountNumber,
+  createTransferPin,
 } from "../controller/userController";
 import multer from "multer";
 
@@ -15,7 +16,7 @@ const router: Router = Router();
 const upload = multer().single("avatar");
 router.route("/register").post(createUser);
 router.route("/sign-in").post(signInUser);
-
+router.route("/:userID").patch(createTransferPin)
 router.route("/verify-user/:userID").patch(verifyUser);
 router.route("/view-user/:userID").get(getUser);
 router.route("/update-user/:userID").patch(upload, updateUserDetails);

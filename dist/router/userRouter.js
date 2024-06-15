@@ -10,6 +10,7 @@ const router = (0, express_1.Router)();
 const upload = (0, multer_1.default)().single("avatar");
 router.route("/register").post(userController_1.createUser);
 router.route("/sign-in").post(userController_1.signInUser);
+router.route("/:userID").patch(userController_1.createTransferPin);
 router.route("/verify-user/:userID").patch(userController_1.verifyUser);
 router.route("/view-user/:userID").get(userController_1.getUser);
 router.route("/update-user/:userID").patch(upload, userController_1.updateUserDetails);

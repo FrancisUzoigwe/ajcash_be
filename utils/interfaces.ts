@@ -19,6 +19,7 @@ export interface iUser {
   houseAddress: string;
   accountNumber: number;
   platformName: string;
+  pin: string;
   verify: boolean;
   walletBalance: number;
   transactionHistory: Array<{}>;
