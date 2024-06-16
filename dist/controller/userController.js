@@ -38,7 +38,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             (0, email_1.verifiedEmail)(user);
             return res.status(201).json({
                 status: 201,
-                message: "creating",
+                message: "Account created successfully",
                 data: user,
             });
         }
@@ -71,7 +71,7 @@ const signInUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                     }, "openSECRET", { expiresIn: "1h" });
                     return res.status(201).json({
                         status: 201,
-                        message: "sign in successfully",
+                        message: "Signed in successfully",
                         data: token,
                     });
                 }
@@ -110,7 +110,6 @@ const createTransferPin = (req, res) => __awaiter(void 0, void 0, void 0, functi
         const { userID } = req.params;
         const { pin } = req.body;
         console.log(`Received userID: ${userID}`);
-        console.log(`Received pin: ${pin}`);
         const user = yield userModel_1.default.findById(userID);
         if (!user) {
             console.log("User not found");
@@ -118,8 +117,8 @@ const createTransferPin = (req, res) => __awaiter(void 0, void 0, void 0, functi
                 message: "User not found",
             });
         }
+        console.log(`Received pin: ${pin}`);
         const pinned = yield userModel_1.default.findByIdAndUpdate(userID, { pin }, { new: true });
-        console.log(`Pinned user: ${pinned}`);
         return res.status(200).json({
             message: "Transaction pin created successfully",
             data: pinned,

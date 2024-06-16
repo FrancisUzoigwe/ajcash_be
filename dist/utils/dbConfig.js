@@ -16,7 +16,8 @@ exports.dbConfig = void 0;
 const mongoose_1 = require("mongoose");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-const url = "mongodb+srv://kossyuzoigwe:kossyuzoigwe@francisuzoigwe.3irljsp.mongodb.net/Ajcash";
+const url = "mongodb://127.0.0.1:27017/dbConfig";
+// const url: string = "mongodb+srv://kossyuzoigwe:kossyuzoigwe@francisuzoigwe.3irljsp.mongodb.net/Ajcash"
 const dbConfig = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield (0, mongoose_1.connect)(url).then(() => {

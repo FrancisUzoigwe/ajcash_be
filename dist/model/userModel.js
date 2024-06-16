@@ -26,7 +26,7 @@ const userModel = new mongoose_1.Schema({
     code: {
         type: String,
     },
-    pin: { type: String, maxlength: 6 },
+    pin: { type: String },
     verifyCode: {
         type: String,
     },
@@ -45,7 +45,7 @@ const userModel = new mongoose_1.Schema({
     },
     walletBalance: {
         type: Number,
-        default: 0,
+        default: 500,
     },
     history: {
         type: [],

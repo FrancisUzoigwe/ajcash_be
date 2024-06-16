@@ -24,12 +24,17 @@ const transferToWallet = (req, res) => __awaiter(void 0, void 0, void 0, functio
     var _a, _b;
     try {
         const { userID, beneficiaryID } = req.params;
-        const { amount } = req.body;
+        const { amount, pin } = req.body;
         const user = yield userModel_1.default.findById(userID);
         const beneficiary = yield userModel_1.default.findById(beneficiaryID);
         if (user && beneficiary) {
             const ref = crypto_1.default.randomBytes(3).toString("hex");
-            if ((user === null || user === void 0 ? void 0 : user.walletBalance) > amount) {
+            if ((user === null || user === void 0 ? void 0 : user.pin) !== pin) {
+                return res.status(400).json({
+                    message: "InvalidPIN",
+                });
+            }
+            if ((user === null || user === void 0 ? void 0 : user.walletBalance) > amount && (user === null || user === void 0 ? void 0 : user.pin) === pin) {
                 yield userModel_1.default.findByIdAndUpdate(userID, {
                     walletBalance: user.walletBalance - amount,
                     history: [
@@ -66,7 +71,7 @@ const transferToWallet = (req, res) => __awaiter(void 0, void 0, void 0, functio
                 }, { new: true });
                 return res.status(201).json({
                     status: 201,
-                    message: "wallet balance credited successfully",
+                    message: `Money sent to ${beneficiary === null || beneficiary === void 0 ? void 0 : beneficiary.firstName} ${beneficiary === null || beneficiary === void 0 ? void 0 : beneficiary.lastName}!!`,
                 });
             }
             else {
@@ -294,17 +299,18 @@ exports.verifyTransaction = verifyTransaction;
 // using flutterwave API: Payout
 const accountPayout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { account_bank, account_number, amount, narration } = req.body;
+        const { account_bank, account_number, amount, narration, pin } = req.body;
         const { userID } = req.params;
         const user = yield userModel_1.default.findById(userID);
         const data = {
             account_bank,
             account_number,
             amount,
+            pin,
             currency: "NGN",
             narration,
         };
-        if ((user === null || user === void 0 ? void 0 : user.walletBalance) >= amount) {
+        if ((user === null || user === void 0 ? void 0 : user.walletBalance) >= amount && user.pin === pin) {
             yield axios_1.default
                 .post("https://api.flutterwave.com/v3/transfers", data, {
                 headers: {

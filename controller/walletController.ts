@@ -13,15 +13,20 @@ export const transferToWallet = async (
 ): Promise<Response> => {
   try {
     const { userID, beneficiaryID } = req.params;
-    const { amount } = req.body;
+    const { amount, pin } = req.body;
 
     const user = await userModel.findById(userID);
     const beneficiary = await userModel.findById(beneficiaryID);
 
     if (user && beneficiary) {
       const ref = crypto.randomBytes(3).toString("hex");
+      if (user?.pin !== pin) {
+        return res.status(400).json({
+          message: "InvalidPIN",
+        });
+      }
 
-      if (user?.walletBalance > amount) {
+      if (user?.walletBalance > amount && user?.pin === pin) {
         await userModel.findByIdAndUpdate(
           userID,
           {
@@ -70,7 +75,7 @@ export const transferToWallet = async (
 
         return res.status(201).json({
           status: 201,
-          message: "wallet balance credited successfully",
+          message: `Money sent to ${beneficiary?.firstName} ${beneficiary?.lastName}!!`,
         });
       } else {
         return res.status(404).json({
@@ -323,7 +328,7 @@ export const verifyTransaction = async (req: Request, res: Response) => {
 
 export const accountPayout = async (req: Request, res: Response) => {
   try {
-    const { account_bank, account_number, amount, narration } = req.body;
+    const { account_bank, account_number, amount, narration, pin } = req.body;
     const { userID } = req.params;
 
     const user: any = await userModel.findById(userID);
@@ -332,11 +337,12 @@ export const accountPayout = async (req: Request, res: Response) => {
       account_bank,
       account_number,
       amount,
+      pin,
       currency: "NGN",
       narration,
     };
 
-    if (user?.walletBalance! >= amount) {
+    if (user?.walletBalance! >= amount && user.pin === pin) {
       await axios
         .post("https://api.flutterwave.com/v3/transfers", data, {
           headers: {
